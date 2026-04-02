@@ -22,9 +22,7 @@
 # - Research: "Docker multi-stage React production"
 # ===========================================
 
-<<<<<<< Updated upstream
 # YOUR CODE HERE:
-=======
 # Stage 1: Builder
 FROM node:18-alpine AS builder
 
@@ -39,6 +37,14 @@ RUN npm run build
 FROM node:18-alpine
 
 WORKDIR /app
+
+RUN npm ci
+
+RUN npm run build
+
+# Stage 2: Production
+FROM node:18-alpine
+
 RUN npm install -g serve
 
 COPY --from=builder /app/build ./build
@@ -46,4 +52,4 @@ COPY --from=builder /app/build ./build
 EXPOSE 3000
 
 CMD ["serve", "-s", "build", "-l", "3000"]
->>>>>>> Stashed changes
+
