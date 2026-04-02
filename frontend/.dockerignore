@@ -9,3 +9,5 @@ README.md
 build/
 coverage
 .dockerignore
+Dockerfile
+docker-compose.yml 

@@ -29,21 +29,15 @@ FROM node:18-alpine AS builder
 WORKDIR /app
 
 COPY package*.json ./
-RUN npm install
+RUN npm ci
 
 COPY . .
 RUN npm run build
 
+# Stage 2: Production
 FROM node:18-alpine
 
 WORKDIR /app
-
-RUN npm ci
-
-RUN npm run build
-
-# Stage 2: Production
-FROM node:18-alpine
 
 RUN npm install -g serve
 
