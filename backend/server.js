@@ -27,9 +27,11 @@ app.get('/api/todos', async (req, res) => {
       const result = await pool.query('SELECT * FROM todos ORDER BY id');
       res.json(result.rows);
    } catch (err) {
+      console.error(err);
       res.status(500).json({ error: err.message });
    }
 });
+
 app.get('/api/todos/:id', async (req, res) => {
    try {
       const { id } = req.params;
@@ -45,10 +47,10 @@ app.get('/api/todos/:id', async (req, res) => {
 
       res.json(result.rows[0]);
    } catch (err) {
+      console.error(err);
       res.status(500).json({ error: err.message });
    }
 });
-
 
 // BUG #2: Missing validation - will cause test to fail!
 // STUDENT TODO: Add validation to reject empty title
@@ -59,7 +61,7 @@ app.post('/api/todos', async (req, res) => {
       // STUDENT FIX: Add validation here!
       // Hint: Check if title is empty or undefined
       // Return 400 status with error message if invalid
-         if (!title || title.trim() === '') {
+      if (!title || title.trim() === '') {
          return res.status(400).json({ error: 'Title is required and cannot be empty' });
       }
 
@@ -70,6 +72,7 @@ app.post('/api/todos', async (req, res) => {
 
       res.status(201).json(result.rows[0]);
    } catch (err) {
+      console.error(err);
       res.status(500).json({ error: err.message });
    }
 });
@@ -91,9 +94,11 @@ app.delete('/api/todos/:id', async (req, res) => {
 
       res.json({ message: 'Deleted successfully' });
    } catch (err) {
+      console.error(err);
       res.status(500).json({ error: err.message });
    }
 });
+
 // BUG #4: Missing PUT endpoint for updating todos
 // STUDENT TODO: Implement PUT /api/todos/:id endpoint
 app.put('/api/todos/:id', async (req, res) => {
@@ -106,7 +111,7 @@ app.put('/api/todos/:id', async (req, res) => {
       }
 
       const result = await pool.query(
-         'UPDATE todos SET title=$1, completed=$2 WHERE id=$3 RETURNING *',
+         'UPDATE todos SET title = $1, completed = $2 WHERE id = $3 RETURNING *',
          [title, completed, id]
       );
 
@@ -116,6 +121,7 @@ app.put('/api/todos/:id', async (req, res) => {
 
       res.json(result.rows[0]);
    } catch (err) {
+      console.error(err);
       res.status(500).json({ error: err.message });
    }
 });
@@ -130,7 +136,7 @@ if (process.env.NODE_ENV !== 'test') {
    });
 }
 
-
 // BUG #6: App not exported - tests can't import it!
 // STUDENT FIX: Export the app module
-module.exports = { app, pool };
+module.exports = app;
+module.exports.pool = pool;
