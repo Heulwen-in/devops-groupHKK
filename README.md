@@ -1,5 +1,5 @@
 # DevOps Base Project
-Hân Nguyễn (test)
+Hân Nguyễn
 Khang Đồng
 Danh Khoa
 ## Project Overview
