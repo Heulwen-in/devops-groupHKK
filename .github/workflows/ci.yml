@@ -135,5 +135,5 @@ jobs:
           script: |
             cd ${{ secrets.DEPLOY_PATH }}
             git pull origin main
-            docker compose down
-            docker compose up -d --build
+            docker rm -f devops-grouphkk_frontend_1 || true
+            docker-compose up -d --build
