@@ -134,8 +134,13 @@ jobs:
           port: ${{ secrets.SSH_PORT || '22' }}
           script: |
             cd ${{ secrets.DEPLOY_PATH }}
+            pwd
+            ls -la
+            git branch
             git pull origin main
+            echo "===== docker-compose.yml ====="
+            cat docker-compose.yml
             docker-compose down || true
             docker rm -f devops-grouphkk_backend_1 || true
             docker rm -f devops-grouphkk_frontend_1 || true
-            docker-compose up -d --build
+            docker-compose up -d --build  
