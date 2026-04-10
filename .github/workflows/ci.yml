@@ -2,9 +2,9 @@ name: CI Pipeline
 
 on:
   push:
-    branches: ["develope", "main"]
+    branches: ["develope", "main","feature/Heulwen"]
   pull_request:
-    branches: ["develope", "main"]
+    branches: ["develope", "main","feature/Heulwen"]
 
 jobs:
   backend:
@@ -135,4 +135,6 @@ jobs:
           script: |
             cd ${{ secrets.DEPLOY_PATH }}
             git pull origin main
+            docker-compose down --remove-orphans
+            docker container prune -f
             docker-compose up -d --build
