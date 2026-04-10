@@ -86,7 +86,7 @@ jobs:
   docker-build-push:
     runs-on: ubuntu-latest
     needs: [backend, frontend]
-    if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develope')
+        if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develope')
 
     steps:
       - name: Checkout code
@@ -134,13 +134,5 @@ jobs:
           port: ${{ secrets.SSH_PORT || '22' }}
           script: |
             cd ${{ secrets.DEPLOY_PATH }}
-            pwd
-            ls -la
-            git branch
             git pull origin main
-            echo "===== docker-compose.yml ====="
-            cat docker-compose.yml
-            docker-compose down || true
-            docker rm -f devops-grouphkk_backend_1 || true
-            docker rm -f devops-grouphkk_frontend_1 || true
-            docker-compose up -d --build  
+            docker-compose up -d --build
