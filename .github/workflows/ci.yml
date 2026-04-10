@@ -4,7 +4,7 @@ on:
   push:
     branches: ["develope", "main","feature/Heulwen"]
   pull_request:
-    branches: ["develope", "main"]
+    branches: ["develope", "main","feature/Heulwen"]
 
 jobs:
   backend:
